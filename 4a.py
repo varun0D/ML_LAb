@@ -1,16 +1,16 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.datasets import load_iris
 
-# Load dataset
-data = pd.read_csv("./ToyotaCorolla.csv")
+# Load Iris dataset
+iris = load_iris()
 
-# Correlation heatmap
-sns.heatmap(
-    data[["Price", "KM", "Doors", "Weight"]].corr(),
-    cmap="jet",
-    annot=True
-)
+# Create DataFrame
+data = pd.DataFrame(iris.data, columns=iris.feature_names)
 
-plt.title("Heatmap of Toyota Corolla Dataset")
+# Correlation Heatmap
+sns.heatmap(data.corr(), annot=True)
+
+plt.title("Iris Dataset Heatmap")
 plt.show()
