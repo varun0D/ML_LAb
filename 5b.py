@@ -1,26 +1,22 @@
-MAX, MIN = 1000, -1000
+MAX = 1000
+MIN = -1000
 
-# Alpha-Beta Pruning Function
-def alpha_beta(depth, node_index, maximizing_player,
-               values, alpha, beta):
+# Alpha-Beta Pruning
+def alphabeta(depth, index, isMax, values, alpha, beta):
 
-    # Leaf node reached
+    # If leaf node, return value
     if depth == 3:
-        return values[node_index]
+        return values[index]
 
-    if maximizing_player:
+    if isMax:
         best = MIN
 
         for i in range(2):
-            val = alpha_beta(depth + 1,
-                             node_index * 2 + i,
-                             False, values,
-                             alpha, beta)
-
-            best = max(best, val)
+            best = max(best, alphabeta(depth + 1, index * 2 + i,
+                                       False, values, alpha, beta))
             alpha = max(alpha, best)
 
-            if beta <= alpha:
+            if alpha >= beta:
                 break
 
         return best
@@ -29,25 +25,20 @@ def alpha_beta(depth, node_index, maximizing_player,
         best = MAX
 
         for i in range(2):
-            val = alpha_beta(depth + 1,
-                             node_index * 2 + i,
-                             True, values,
-                             alpha, beta)
-
-            best = min(best, val)
+            best = min(best, alphabeta(depth + 1, index * 2 + i,
+                                       True, values, alpha, beta))
             beta = min(beta, best)
 
-            if beta <= alpha:
+            if alpha >= beta:
                 break
 
         return best
 
-# Driver Code
+
+# Leaf node values
 values = [3, 5, 6, 9, 1, 2, 0, -1]
 
-result = alpha_beta(
-    0, 0, True,
-    values, MIN, MAX
-)
+# Find optimal value
+result = alphabeta(0, 0, True, values, MIN, MAX)
 
-print("The optimal value is:", result)
+print("Optimal Value =", result)
