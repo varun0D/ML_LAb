@@ -1,21 +1,20 @@
-import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
+from sklearn.datasets import load_iris
 
-# Load Toyota dataset
-dataset = pd.read_csv('./ToyotaCorolla.csv')
+# Load Iris dataset
+iris = load_iris()
 
-# Select variables
-x = dataset['KM']
-y = dataset['Weight']
-z = dataset['Price']
+# Select columns
+x = iris.data[:, 0]   # Sepal Length
+y = iris.data[:, 1]   # Sepal Width
+z = iris.data[:, 2]   # Petal Length
 
-# Create contour plot
-plt.tricontourf(x, y, z, levels=20, cmap='jet')
-plt.colorbar(label='Price')
+# Contour plot
+plt.tricontourf(x, y, z)
+plt.colorbar()
 
-plt.xlabel('KM')
-plt.ylabel('Weight')
-plt.title('Contour Plot')
+plt.xlabel("Sepal Length")
+plt.ylabel("Sepal Width")
+plt.title("Contour Plot (Iris Dataset)")
 
 plt.show()
